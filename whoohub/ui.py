@@ -33,6 +33,7 @@ CSS = """
 .badge.votes    { color: alpha(currentColor, 0.7); background: alpha(currentColor, 0.08); }
 .badge.inst     { color: var(--accent-fg-color); background: var(--accent-bg-color); }
 .chip { border-radius: 99px; padding: 4px 14px; font-weight: 700; }
+.chip:checked { background: var(--accent-bg-color); color: var(--accent-fg-color); }
 .app-name { font-size: 22pt; font-weight: 800; }
 .log { font-family: monospace; font-size: 8.5pt; padding: 8px; }
 .shot { border-radius: 12px; }
