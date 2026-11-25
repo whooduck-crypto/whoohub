@@ -26,7 +26,7 @@ def N_(text):  # mark for translation, translate later
 
 LANG = ui_language()
 XML_LANG = "{http://www.w3.org/XML/1998/namespace}lang"
-SCHEMA_VERSION = 6
+SCHEMA_VERSION = 7
 
 ARCH_XML_DIR = Path("/usr/share/swcatalog/xml")
 ARCH_ICON_DIR = Path("/usr/share/swcatalog/icons")
@@ -65,6 +65,47 @@ FEATURED = [
 ]
 
 
+# Home page shelves: curated apps first (the ones people look for), then the best-described apps of the
+# section. (shelf id, title, section to fill from, curated AppStream ids)
+SHELVES = [
+    ("popular", N_("Popular"), None, FEATURED[:16]),
+    ("games", N_("Games"), "game", [
+        "com.valvesoftware.steam", "com.heroicgameslauncher.hgl", "net.lutris.lutris", "org.prismlauncher.prismlauncher",
+        "org.libretro.retroarch", "net.minetest.minetest", "org.luanti.luanti", "net.supertuxkart.supertuxkart",
+        "com.play0ad.zeroad", "org.openttd.openttd", "org.dolphin_emu.dolphin_emu", "net.pcsx2.pcsx2",
+        "org.ppsspp.ppsspp", "net.veloren.airshipper", "io.openrct2.openrct2"]),
+    ("create", N_("Create"), "graphics", [
+        "org.gimp.gimp", "org.kde.krita", "org.inkscape.inkscape", "org.blender.blender", "org.kde.kdenlive",
+        "com.obsproject.studio", "org.audacityteam.audacity", "org.darktable.darktable", "org.shotcut.shotcut",
+        "com.github.pengutronix.lmms", "io.lmms.lmms", "org.ardour.ardour", "org.synfig.synfigstudio"]),
+    ("work", N_("Work"), "office", [
+        "org.libreoffice.libreoffice", "org.onlyoffice.desktopeditors", "md.obsidian.obsidian",
+        "org.mozilla.thunderbird", "com.visualstudio.code", "com.vscodium.codium", "org.kde.okular",
+        "com.github.xournalpp.xournalpp", "org.zotero.zotero", "net.ankiweb.anki", "us.zoom.zoom"]),
+    ("social", N_("Internet & chat"), "network", [
+        "org.mozilla.firefox", "com.discordapp.discord", "org.telegram.desktop", "org.signal.signal",
+        "com.brave.browser", "org.chromium.chromium", "org.qbittorrent.qbittorrent", "com.github.eneshecan.whatsappfordesktop",
+        "im.riot.riot", "org.mozilla.thunderbird", "com.spotify.client"]),
+    ("tools", N_("Handy tools"), "utility", [
+        "com.github.tchx84.flatseal", "net.davidotek.pupgui2", "io.github.peazip.peazip", "org.keepassxc.keepassxc",
+        "com.github.wwmm.easyeffects", "io.missioncenter.missioncenter", "org.localsend.localsend_app",
+        "com.usebottles.bottles", "it.mijorus.gearlever", "org.gnome.baobab", "com.github.unrud.videodownloader"]),
+]
+
+# Banner on the home page: big, recognizable apps with good screenshots
+BANNER = ["org.blender.blender", "com.obsproject.studio", "org.kde.krita", "com.valvesoftware.steam",
+          "org.mozilla.firefox", "org.prismlauncher.prismlauncher", "org.kde.kdenlive", "md.obsidian.obsidian"]
+
+
+def primary_section(app):
+    """(section id, title) an app belongs to, for the small caption under its name."""
+    cats = set(app.get("categories") or [])
+    for sid, _icon, title, wanted in SECTIONS[1:]:
+        if cats & wanted:
+            return sid, title
+    return "", ""
+
+
 def norm_id(i):
     i = i.strip().lower()
     return i[:-8] if i.endswith(".desktop") else i
@@ -84,22 +125,34 @@ def _pick(el, tag):
 
 
 def _description(el):
-    d = el.find("description")
+    # Two layouts exist: one <description> per language (<description xml:lang="ar">…), as in Flathub,
+    # or a single one with interleaved translated paragraphs (<p>…</p><p xml:lang="ru">…</p>).
+    by_lang = {}
+    for cand in el.findall("description"):
+        by_lang.setdefault(cand.get(XML_LANG) or "", cand)
+    # explicit None checks: an Element without children is falsy, so `or` would skip a real description
+    d = next((by_lang[k] for k in (LANG, "", "en", "C") if k in by_lang), None)
     if d is None:
         return ""
-    # catalogs interleave translated paragraphs: <p>…</p><p xml:lang="ru">…</p>
+    if d.get(XML_LANG):  # a whole description in one language: take every paragraph
+        return _paragraphs(d, None, ignore_lang=True)
     have_ru = any(c.get(XML_LANG) == LANG for c in d.iter())
-    want = LANG if have_ru else None
+    return _paragraphs(d, LANG if have_ru else None)
+
+
+def _paragraphs(d, want, ignore_lang=False):
+    def lang(e):
+        return None if ignore_lang else (e.get(XML_LANG) or None)
     out = []
     for c in d:
-        if (c.get(XML_LANG) or None) != want and c.tag == "p":
+        if lang(c) != want and c.tag == "p":
             continue
         if c.tag == "p":
             out.append(" ".join("".join(c.itertext()).split()))
         elif c.tag in ("ul", "ol"):
-            items = [li for li in c if li.tag == "li" and (li.get(XML_LANG) or None) == want]
+            items = [li for li in c if li.tag == "li" and lang(li) == want]
             if not items and want:
-                items = [li for li in c if li.tag == "li" and not li.get(XML_LANG)]
+                items = [li for li in c if li.tag == "li" and not lang(li)]
             out += ["• " + " ".join("".join(li.itertext()).split()) for li in items]
     return "\n\n".join(x for x in out if x).replace("\n\n• ", "\n• ")
 
@@ -411,6 +464,26 @@ class Catalog:
         cond = " or ".join("(';'||categories||';') like ?" for _cat in cats)
         q = f"select {self.COLS} from apps where console=0 and ({cond}) order by rank, name limit ?"
         return [self._app(r) for r in self.con.execute(q, [f"%;{c};%" for c in cats] + [limit])]
+
+    def get_many(self, keys):
+        """Apps for these keys, in the given order, skipping keys not in the catalog."""
+        if not keys:
+            return []
+        q = f"select {self.COLS} from apps where key in ({','.join('?' * len(keys))})"
+        found = {r["key"]: self._app(r) for r in self.con.execute(q, list(keys))}
+        return [found[k] for k in keys if k in found]
+
+    def shelf(self, shelf_id, size=16):
+        _sid, _title, section, curated = next(x for x in SHELVES if x[0] == shelf_id)
+        apps = self.get_many(list(dict.fromkeys(curated)))
+        if section and len(apps) < size:
+            have = {a["key"] for a in apps}
+            apps += [a for a in self.section(section, limit=size * 3) if a["key"] not in have
+                     and a["icon"] and a["summary"]][:size - len(apps)]
+        return apps[:size]
+
+    def banner(self):
+        return [a for a in self.get_many(BANNER) if a["screenshots"]]
 
     def search(self, text, limit=120):
         words = re.findall(r"\w+", text.lower())

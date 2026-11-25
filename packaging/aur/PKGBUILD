@@ -1,6 +1,6 @@
 # Maintainer: whooduck-crypto <whooduck-crypto at users dot noreply dot github dot com>
 pkgname=whoohub
-pkgver=0.1.2
+pkgver=0.2.0
 pkgrel=1
 pkgdesc="One app store for Arch: repositories, Flathub, AUR and AppImage"
 arch=('any')
@@ -12,7 +12,7 @@ optdepends=('flatpak: install apps from Flathub'
             'git: install packages from the AUR'
             'base-devel: build packages from the AUR')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('df8ed395635a7451e39c7970b980c2690eb48e39b38d9370ae1bcc2181ab5695')
+sha256sums=('SKIP')  # set after tagging: updpkgsums
 
 build() {
     cd "$pkgname-$pkgver"

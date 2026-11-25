@@ -44,6 +44,12 @@
     <binary>whoohub</binary>
   </provides>
   <releases>
+    <release version="0.2.0" date="2026-11-26">
+      <description>
+        <p>A new look in the style of phone app stores: a home page with a banner and shelves, Games and Apps
+        tabs, one Install/Open button per app in every list, and a simpler app page.</p>
+      </description>
+    </release>
     <release version="0.1.2" date="2026-11-25">
       <description>
         <p>Update from inside the app also when whoohub was installed with make install.</p>

@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshot.png" width="800" alt="whoohub: the Explore page">
+  <img src="docs/screenshot.png" width="800" alt="whoohub: the Games tab">
 </p>
 
 ## Why
@@ -22,16 +22,17 @@ choice of where to install it from — and a plain explanation of how the source
 
 ## Features
 
-- **One card per app.** Firefox from the repositories and from Flathub is a single card with a source
-  picker, not two search results.
-- **Explore and search** across every source, by category or by name.
+- **Feels like a phone store.** Home with an app-of-the-day banner and shelves (Popular, Games, Create,
+  Work, Internet & chat, Handy tools), Games and Apps tabs, My apps, and search always at the top.
+- **One button per app.** Install / Open right from any list — no need to open the app's page.
+- **One page per app.** Firefox from the repositories and from Flathub is one app; where to install it from
+  is a quiet choice at the bottom of its page, explained in plain words.
 - **Repositories (pacman)** — installed through the graphical polkit password prompt, no terminal needed.
 - **Flathub** — installed for your user, no password.
 - **AUR** — searched online; whoohub shows the PKGBUILD and warns before building, installs missing
   dependencies from the repositories, then builds with `makepkg`.
 - **AppImage** — the AppImageHub catalog; whoohub downloads the latest stable release from the author's
   GitHub into `~/Applications` and adds a menu entry.
-- **Installed** view with Open and Remove buttons.
 - **Update check** — once a day whoohub asks GitHub for its latest release and offers to update right from the app: a package install via `pacman -U`, a `make install` copy by reinstalling the release sources into the same prefix — always after verifying the checksum GitHub publishes. Turn it off in the menu.
 - Follows the system light/dark style (libadwaita). English and Russian; more languages welcome.
 
@@ -106,14 +107,16 @@ or Flathub. whoohub says so on every such page and shows the AUR build script be
 make run                                   # run from the source tree
 WHOOHUB_OPEN=org.mozilla.firefox make run  # open an app page directly
 WHOOHUB_SEARCH=obs make run                # start with a search
-WHOOHUB_VIEW=installed make run            # start on the Installed view
+WHOOHUB_VIEW=games make run                # start on a tab: games, apps, mine
 ```
 
 The code is plain Python + PyGObject, no build system beyond `make`:
 
 - `whoohub/catalog.py` — reading AppStream / AppImageHub, building and querying the catalog
 - `whoohub/backends.py` — install, remove and launch for every source
-- `whoohub/ui.py` — the GTK 4 / libadwaita interface
+- `whoohub/ui.py` — the main window: tabs, search, install/remove, self-update
+- `whoohub/pages.py`, `whoohub/widgets.py` — the pages and the widgets they are built from
+- `whoohub/updates.py` — checking for and installing new whoohub releases
 - `po/` — translations (gettext)
 
 ### Translating

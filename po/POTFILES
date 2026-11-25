@@ -1,6 +1,8 @@
 whoohub/backends.py
 whoohub/catalog.py
 whoohub/i18n.py
+whoohub/pages.py
 whoohub/paths.py
 whoohub/ui.py
 whoohub/updates.py
+whoohub/widgets.py
