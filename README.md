@@ -37,14 +37,26 @@ choice of where to install it from — and a plain explanation of how the source
 
 ## Install
 
-### Ready-made package (recommended)
+### Quick install (recommended)
 
 ```sh
-sudo pacman -U https://github.com/whooduck-crypto/whoohub/releases/download/v0.1.2/whoohub-0.1.2-1-any.pkg.tar.zst
+curl -fsSL https://raw.githubusercontent.com/whooduck-crypto/whoohub/main/install.sh | sh
 ```
 
-pacman pulls in the dependencies itself. Newer versions are on the
-[Releases](https://github.com/whooduck-crypto/whoohub/releases) page.
+The [script](install.sh) downloads the latest release package, checks it against the checksum GitHub
+publishes and installs it with pacman (sudo asks for your password; pacman pulls in the dependencies).
+Feel free to read it first. Later updates come from inside whoohub.
+
+### Manually
+
+Download `whoohub-…-any.pkg.tar.zst` from [Releases](https://github.com/whooduck-crypto/whoohub/releases), then:
+
+```sh
+sudo pacman -U ~/Downloads/whoohub-*-any.pkg.tar.zst
+```
+
+(`pacman -U <URL>` straight from the web does not work: pacman requires a signature for packages
+installed from a URL, and whoohub's packages are not signed.)
 
 ### Build the package yourself
 

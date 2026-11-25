@@ -37,14 +37,26 @@ AUR и AppImage, которые скачивают вручную. whoohub ищ�
 
 ## Установка
 
-### Готовый пакет (рекомендуется)
+### Быстрая установка (рекомендуется)
 
 ```sh
-sudo pacman -U https://github.com/whooduck-crypto/whoohub/releases/download/v0.1.2/whoohub-0.1.2-1-any.pkg.tar.zst
+curl -fsSL https://raw.githubusercontent.com/whooduck-crypto/whoohub/main/install.sh | sh
 ```
 
-Зависимости pacman поставит сам. Новые версии — на странице
-[Releases](https://github.com/whooduck-crypto/whoohub/releases).
+[Скрипт](install.sh) скачивает пакет последнего выпуска, сверяет его с контрольной суммой от GitHub и
+ставит через pacman (sudo спросит пароль, зависимости pacman поставит сам). Его можно сначала прочитать.
+Дальше whoohub обновляется сам, прямо из программы.
+
+### Вручную
+
+Скачай `whoohub-…-any.pkg.tar.zst` со страницы [Releases](https://github.com/whooduck-crypto/whoohub/releases) и выполни:
+
+```sh
+sudo pacman -U ~/Загрузки/whoohub-*-any.pkg.tar.zst
+```
+
+(`pacman -U <ссылка>` прямо из интернета не сработает: для пакетов по ссылке pacman требует подпись, а
+пакеты whoohub не подписаны.)
 
 ### Собрать пакет самому
 
