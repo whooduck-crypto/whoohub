@@ -7,6 +7,7 @@ One app = one row (apps.key). Sources of the same app are merged:
 The AUR is not stored: it is searched online (backends.aur_search).
 """
 import gzip
+import html
 import json
 import os
 import re
@@ -25,7 +26,7 @@ def N_(text):  # mark for translation, translate later
 
 LANG = ui_language()
 XML_LANG = "{http://www.w3.org/XML/1998/namespace}lang"
-SCHEMA_VERSION = 5
+SCHEMA_VERSION = 6
 
 ARCH_XML_DIR = Path("/usr/share/swcatalog/xml")
 ARCH_ICON_DIR = Path("/usr/share/swcatalog/icons")
@@ -191,6 +192,25 @@ def parse_appstream(path, source, icon_root):
             el.clear()
 
 
+def _html_to_text(text):
+    """AppImageHub descriptions are often HTML (<p>, <li>, entities): turn them into plain paragraphs."""
+    text = re.sub(r"(?i)<\s*li[^>]*>", "\n• ", text)
+    text = re.sub(r"(?i)<\s*(br|/p|/li|/ul|/ol|/h\d)\s*/?>", "\n", text)
+    text = html.unescape(re.sub(r"<[^>]+>", "", text))
+    paras = [" ".join(line.split()) for line in text.splitlines()]
+    return "\n".join(p for p in paras if p)
+
+
+def _first_sentence(text, limit=140):
+    """A one-line summary: the first sentence of the first paragraph, cut at a word boundary."""
+    line = text.split("\n", 1)[0].lstrip("• ")
+    m = re.match(r"(.+?[.!?])(\s|$)", line)
+    line = m.group(1) if m and len(m.group(1)) >= 20 else line
+    if len(line) > limit:
+        line = line[:limit].rsplit(" ", 1)[0].rstrip(",.;:—-") + "…"
+    return line
+
+
 def _strs(v):
     """List of strings from a feed field — the feed mixes nulls, numbers and dicts."""
     return [str(x) for x in v if isinstance(x, (str, int, float))] if isinstance(v, list) else []
@@ -210,13 +230,13 @@ def parse_appimages(feed_path):
         if not re.fullmatch(r"[\w.-]+/[\w.-]+", gh):  # must be "owner/repo"
             gh = ""
         icons, shots = _strs(it.get("icons")), _strs(it.get("screenshots"))
-        desc = it.get("description") if isinstance(it.get("description"), str) else ""
+        desc = _html_to_text(it["description"]) if isinstance(it.get("description"), str) else ""
         authors = [str(a.get("name")) for a in it.get("authors") or [] if isinstance(a, dict) and a.get("name")]
         yield {
             "key": "appimage:" + it["name"].lower(),
             "name": name,
-            "summary": desc.strip(),
-            "description": desc.strip(),
+            "summary": _first_sentence(desc),
+            "description": desc.replace("\n", "\n\n").replace("\n\n• ", "\n• "),
             "icon": APPIMAGE_DB_URL + icons[0] if icons else "",
             "categories": _strs(it.get("categories")),
             "keywords": "",

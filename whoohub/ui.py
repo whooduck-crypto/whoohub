@@ -132,7 +132,9 @@ def tile(title, summary, icon_src, badges, on_click, icon_name=None):
     g.append(img)
     v = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=3, hexpand=True)
     v.append(Gtk.Label(label=title, css_classes=["tile-name"], xalign=0, ellipsize=Pango.EllipsizeMode.END))
-    v.append(Gtk.Label(label=summary or " ", css_classes=["tile-sum", "dim-label"], xalign=0, wrap=True, lines=2,
+    # one paragraph only: "lines" cannot cap text that has its own line breaks (that made tiles huge)
+    summary = " ".join((summary or "").split()) or " "
+    v.append(Gtk.Label(label=summary, css_classes=["tile-sum", "dim-label"], xalign=0, wrap=True, lines=2,
                        ellipsize=Pango.EllipsizeMode.END, max_width_chars=30, width_chars=20))
     bb = Gtk.Box(spacing=4, margin_top=3)
     for b in badges:
