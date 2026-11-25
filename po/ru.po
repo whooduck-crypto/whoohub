@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: whoohub 0.2.0\n"
 "Report-Msgid-Bugs-To: https://github.com/whooduck-crypto/whoohub/issues\n"
-"POT-Creation-Date: 2026-11-26 00:16+0500\n"
+"POT-Creation-Date: 2026-11-26 00:26+0500\n"
 "PO-Revision-Date: 2026-11-25 23:30+0500\n"
 "Last-Translator: whooduck-crypto\n"
 "Language-Team: Russian\n"
@@ -22,9 +22,7 @@ msgstr "Репозитории Arch (pacman)"
 msgid ""
 "A distribution package: updated together with the system (pacman -Syu). "
 "Needs your password."
-msgstr ""
-"Пакет дистрибутива: обновляется вместе с системой (pacman -Syu). Нужен "
-"пароль."
+msgstr "Пакет дистрибутива: обновляется вместе с системой (pacman -Syu). Нужен пароль."
 
 #: whoohub/backends.py:28
 msgid "Flathub"
@@ -34,9 +32,7 @@ msgstr "Flathub"
 msgid ""
 "A sandboxed Flatpak, installed for your user without a password. Usually the "
 "newest version."
-msgstr ""
-"Flatpak в песочнице, ставится в твой профиль без пароля. Обычно самая свежая "
-"версия."
+msgstr "Flatpak в песочнице, ставится в твой профиль без пароля. Обычно самая свежая версия."
 
 #: whoohub/backends.py:30
 msgid "AUR"
@@ -45,9 +41,7 @@ msgstr "AUR"
 #: whoohub/backends.py:31
 msgid ""
 "Built from a community script (PKGBUILD) — worth reading before installing."
-msgstr ""
-"Сборка из скрипта сообщества (PKGBUILD) — перед установкой его стоит "
-"просмотреть."
+msgstr "Сборка из скрипта сообщества (PKGBUILD) — перед установкой его стоит просмотреть."
 
 #: whoohub/backends.py:32
 msgid "AppImage"
@@ -57,8 +51,7 @@ msgstr "AppImage"
 msgid ""
 "A single file from the author's GitHub, nothing installed system-wide. Does "
 "not update itself."
-msgstr ""
-"Один файл с GitHub автора, без установки в систему. Сам не обновляется."
+msgstr "Один файл с GitHub автора, без установки в систему. Сам не обновляется."
 
 #: whoohub/backends.py:136 whoohub/backends.py:144 whoohub/backends.py:326
 #: whoohub/updates.py:148
@@ -87,9 +80,7 @@ msgstr "Ошибка: {error}"
 msgid ""
 "pacman could not install the package. If the log says “404” or “not found”, "
 "update the system first (sudo pacman -Syu)"
-msgstr ""
-"pacman не смог установить пакет. Если в логе «404» или «не найден» — сначала "
-"обнови систему (sudo pacman -Syu)"
+msgstr "pacman не смог установить пакет. Если в логе «404» или «не найден» — сначала обнови систему (sudo pacman -Syu)"
 
 #: whoohub/backends.py:166
 #, python-brace-format
@@ -100,8 +91,7 @@ msgstr "{name} установлен"
 msgid ""
 "pacman could not remove the package (other packages may need it — see the "
 "log)"
-msgstr ""
-"pacman не смог удалить пакет (возможно, он нужен другим пакетам — см. лог)"
+msgstr "pacman не смог удалить пакет (возможно, он нужен другим пакетам — см. лог)"
 
 #: whoohub/backends.py:174
 #, python-brace-format
@@ -141,9 +131,7 @@ msgstr "Не удалось скачать пакет из AUR"
 msgid ""
 "It needs packages that are not in the repositories (they are in the AUR "
 "too): {names}. Install them first."
-msgstr ""
-"Нужны пакеты, которых нет в репозиториях (они тоже из AUR): {names}. "
-"Установи их сначала."
+msgstr "Нужны пакеты, которых нет в репозиториях (они тоже из AUR): {names}. Установи их сначала."
 
 #: whoohub/backends.py:256
 #, python-brace-format
@@ -314,7 +302,7 @@ msgstr "По запросу «{text}» ничего не нашлось"
 msgid "♥ {votes} · community package"
 msgstr "♥ {votes} · пакет сообщества"
 
-#: whoohub/pages.py:186 whoohub/ui.py:119
+#: whoohub/pages.py:186
 msgid "My apps"
 msgstr "Мои приложения"
 
@@ -336,7 +324,7 @@ msgid "Open"
 msgstr "Открыть"
 
 #: whoohub/pages.py:228 whoohub/pages.py:276 whoohub/pages.py:466
-#: whoohub/ui.py:222
+#: whoohub/ui.py:223
 msgid "Remove"
 msgstr "Удалить"
 
@@ -384,8 +372,7 @@ msgstr "Свернуть"
 msgid ""
 "The file is published on the author's website — whoohub opens the download "
 "page."
-msgstr ""
-"Файл выкладывается на сайте автора — whoohub откроет страницу загрузки."
+msgstr "Файл выкладывается на сайте автора — whoohub откроет страницу загрузки."
 
 #: whoohub/pages.py:410
 msgid "no maintainer (orphan)"
@@ -399,9 +386,7 @@ msgstr "Пакет сообщества (AUR)"
 msgid ""
 "AUR packages are built from a script (PKGBUILD) written by the packager, and "
 "it runs on your computer."
-msgstr ""
-"Пакет из AUR собирается по скрипту (PKGBUILD) от автора пакета и выполняется "
-"на твоём компьютере."
+msgstr "Пакет из AUR собирается по скрипту (PKGBUILD) от автора пакета и выполняется на твоём компьютере."
 
 #: whoohub/pages.py:426
 msgid "Flagged out of date."
@@ -437,11 +422,9 @@ msgstr "Собрать {name}?"
 msgid ""
 "The build script (PKGBUILD) was written by the packager, not by Arch Linux, "
 "and it will run on your computer. If you have not read it yet, do it first."
-msgstr ""
-"Скрипт сборки (PKGBUILD) написан автором пакета, а не командой Arch Linux, и "
-"будет выполнен на твоём компьютере. Если ещё не смотрел его — сначала глянь."
+msgstr "Скрипт сборки (PKGBUILD) написан автором пакета, а не командой Arch Linux, и будет выполнен на твоём компьютере. Если ещё не смотрел его — сначала глянь."
 
-#: whoohub/pages.py:482 whoohub/ui.py:221 whoohub/widgets.py:370
+#: whoohub/pages.py:482 whoohub/ui.py:222 whoohub/widgets.py:370
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -469,9 +452,7 @@ msgstr "Каталог пуст"
 msgid ""
 "No sources found. Install archlinux-appstream-data for the Arch repositories "
 "and/or flatpak for Flathub, then start whoohub again."
-msgstr ""
-"Нет ни одного источника. Установи archlinux-appstream-data для репозиториев "
-"Arch и/или flatpak для Flathub, затем снова запусти whoohub."
+msgstr "Нет ни одного источника. Установи archlinux-appstream-data для репозиториев Arch и/или flatpak для Flathub, затем снова запусти whoohub."
 
 #: whoohub/ui.py:113
 msgid "Home"
@@ -481,93 +462,97 @@ msgstr "Главная"
 msgid "Apps"
 msgstr "Программы"
 
-#: whoohub/ui.py:128
+#. TRANSLATORS: tab with the apps the user has installed (like "Library" in Google Play / Steam); keep it short
+#: whoohub/ui.py:120
+msgid "Library"
+msgstr "Библиотека"
+
+#: whoohub/ui.py:129
 msgid "Search apps and games"
 msgstr "Поиск программ и игр"
 
-#: whoohub/ui.py:134
+#: whoohub/ui.py:135
 msgid "Check for updates"
 msgstr "Проверить обновления"
 
-#: whoohub/ui.py:135
+#: whoohub/ui.py:136
 msgid "Check for updates automatically"
 msgstr "Проверять обновления автоматически"
 
-#: whoohub/ui.py:138
+#: whoohub/ui.py:139
 msgid "Rebuild catalog"
 msgstr "Пересобрать каталог"
 
-#: whoohub/ui.py:139
+#: whoohub/ui.py:140
 msgid "About whoohub"
 msgstr "О whoohub"
 
-#: whoohub/ui.py:208
+#: whoohub/ui.py:209
 #, python-brace-format
 msgid "Installing {name}…"
 msgstr "Устанавливаю {name}…"
 
-#: whoohub/ui.py:219
+#: whoohub/ui.py:220
 #, python-brace-format
 msgid "Remove {name}?"
 msgstr "Удалить {name}?"
 
-#: whoohub/ui.py:220
+#: whoohub/ui.py:221
 msgid "The app and the dependencies nothing else needs will be removed."
 msgstr "Программа и ненужные больше зависимости будут удалены."
 
-#: whoohub/ui.py:232
+#: whoohub/ui.py:233
 msgid "Could not find how to start it — look for the app in your menu"
 msgstr "Не нашёл, как запустить — поищи программу в меню"
 
-#: whoohub/ui.py:281
+#: whoohub/ui.py:282
 msgid "Could not check for updates — no connection to GitHub?"
 msgstr "Не удалось проверить обновления — нет связи с GitHub?"
 
-#: whoohub/ui.py:286
+#: whoohub/ui.py:287
 #, python-brace-format
 msgid "You have the latest version ({version})"
 msgstr "У тебя последняя версия ({version})"
 
-#: whoohub/ui.py:291
+#: whoohub/ui.py:292
 #, python-brace-format
 msgid "You have {current}."
 msgstr "У тебя {current}."
 
-#: whoohub/ui.py:294
+#: whoohub/ui.py:295
 #, python-brace-format
 msgid "whoohub {version} is available"
 msgstr "Вышел whoohub {version}"
 
-#: whoohub/ui.py:301
+#: whoohub/ui.py:302
 msgid "Later"
 msgstr "Позже"
 
-#: whoohub/ui.py:302
+#: whoohub/ui.py:303
 msgid "Skip this version"
 msgstr "Пропустить эту версию"
 
-#: whoohub/ui.py:304
+#: whoohub/ui.py:305
 msgid "Update"
 msgstr "Обновить"
 
-#: whoohub/ui.py:308
+#: whoohub/ui.py:309
 msgid "Open release page"
 msgstr "Открыть страницу выпуска"
 
-#: whoohub/ui.py:323
+#: whoohub/ui.py:324
 msgid "Updating whoohub"
 msgstr "Обновление whoohub"
 
-#: whoohub/ui.py:328
+#: whoohub/ui.py:329
 msgid "Restart whoohub"
 msgstr "Перезапустить whoohub"
 
-#: whoohub/ui.py:385
+#: whoohub/ui.py:386
 msgid ""
 "One app store for Arch-based systems: repositories, Flathub, AUR and "
 "AppImage."
-msgstr ""
-"Один магазин для систем на базе Arch: репозитории, Flathub, AUR и AppImage."
+msgstr "Один магазин для систем на базе Arch: репозитории, Flathub, AUR и AppImage."
 
 #: whoohub/updates.py:125
 msgid ""
@@ -578,9 +563,7 @@ msgstr "К этому выпуску не приложен пакет — нов
 msgid ""
 "This release has no source archive attached — the release page has the new "
 "version."
-msgstr ""
-"К этому выпуску не приложен архив исходников — новая версия на странице "
-"выпуска."
+msgstr "К этому выпуску не приложен архив исходников — новая версия на странице выпуска."
 
 #: whoohub/updates.py:131
 #, python-brace-format
@@ -594,8 +577,7 @@ msgstr "whoohub запущен из папки с исходниками — о�
 #: whoohub/updates.py:140
 #, python-brace-format
 msgid "GitHub did not publish a checksum for {file} — not installing it"
-msgstr ""
-"GitHub не опубликовал контрольную сумму для {file} — устанавливать не буду"
+msgstr "GitHub не опубликовал контрольную сумму для {file} — устанавливать не буду"
 
 #: whoohub/updates.py:142
 #, python-brace-format
@@ -605,9 +587,7 @@ msgstr "Скачиваю {file}…"
 #: whoohub/updates.py:153
 msgid ""
 "The downloaded file is damaged (checksum mismatch) — nothing was installed"
-msgstr ""
-"Скачанный файл повреждён (контрольная сумма не совпала) — ничего не "
-"установлено"
+msgstr "Скачанный файл повреждён (контрольная сумма не совпала) — ничего не установлено"
 
 #: whoohub/updates.py:154
 msgid "Checksum OK"

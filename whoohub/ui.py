@@ -116,7 +116,8 @@ class StoreWindow(Adw.ApplicationWindow):
         self.apps = BrowsePage(self, "apps")
         self.views.add_titled_with_icon(self.apps, "apps", _("Apps"), "view-app-grid-symbolic")
         self.mine = MyAppsPage(self)
-        self.views.add_titled_with_icon(self.mine, "mine", _("My apps"), "folder-download-symbolic")
+        # TRANSLATORS: tab with the apps the user has installed (like "Library" in Google Play / Steam); keep it short
+        self.views.add_titled_with_icon(self.mine, "mine", _("Library"), "folder-download-symbolic")
         self.views.connect("notify::visible-child-name", self._on_view)
 
         self.outer = Gtk.Stack(transition_type=Gtk.StackTransitionType.CROSSFADE)
@@ -125,7 +126,7 @@ class StoreWindow(Adw.ApplicationWindow):
         self.outer.add_named(self.search_page, "search")
 
         header = Adw.HeaderBar(title_widget=Adw.ViewSwitcher(stack=self.views, policy=Adw.ViewSwitcherPolicy.WIDE))
-        self.search = Gtk.SearchEntry(placeholder_text=_("Search apps and games"), width_request=320)
+        self.search = Gtk.SearchEntry(placeholder_text=_("Search apps and games"), width_request=260)
         self.search.connect("search-changed", self._on_search)
         self.search.set_key_capture_widget(self)
         header.pack_start(self.search)

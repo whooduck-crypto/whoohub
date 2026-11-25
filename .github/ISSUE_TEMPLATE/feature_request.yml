@@ -1,0 +1,11 @@
+name: Idea / Идея
+description: Suggest something new / Предложить новое
+labels: [enhancement]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Idea / Идея
+      description: What would you like whoohub to do, and why? / Что должен уметь whoohub и зачем?
+    validations:
+      required: true
