@@ -1,0 +1,472 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the whoohub package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: whoohub 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/whooduck-crypto/whoohub/issues\n"
+"POT-Creation-Date: 2026-11-25 23:27+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: whoohub/backends.py:26
+msgid "Arch repositories (pacman)"
+msgstr ""
+
+#: whoohub/backends.py:27
+msgid ""
+"A distribution package: updated together with the system (pacman -Syu). "
+"Needs your password."
+msgstr ""
+
+#: whoohub/backends.py:28
+msgid "Flathub"
+msgstr ""
+
+#: whoohub/backends.py:29
+msgid ""
+"A sandboxed Flatpak, installed for your user without a password. Usually the "
+"newest version."
+msgstr ""
+
+#: whoohub/backends.py:30
+msgid "AUR"
+msgstr ""
+
+#: whoohub/backends.py:31
+msgid ""
+"Built from a community script (PKGBUILD) — worth reading before installing."
+msgstr ""
+
+#: whoohub/backends.py:32
+msgid "AppImage"
+msgstr ""
+
+#: whoohub/backends.py:33
+msgid ""
+"A single file from the author's GitHub, nothing installed system-wide. Does "
+"not update itself."
+msgstr ""
+
+#: whoohub/backends.py:136 whoohub/backends.py:144 whoohub/backends.py:326
+msgid "Cancelled"
+msgstr ""
+
+#: whoohub/backends.py:146
+msgid "No password entered — nothing was changed"
+msgstr ""
+
+#: whoohub/backends.py:148
+#, python-brace-format
+msgid "The command failed (exit code {code})"
+msgstr ""
+
+#: whoohub/backends.py:153
+msgid "Done"
+msgstr ""
+
+#: whoohub/backends.py:157
+#, python-brace-format
+msgid "Error: {error}"
+msgstr ""
+
+#: whoohub/backends.py:164
+msgid ""
+"pacman could not install the package. If the log says “404” or “not found”, "
+"update the system first (sudo pacman -Syu)"
+msgstr ""
+
+#: whoohub/backends.py:166
+#, python-brace-format
+msgid "{name} installed"
+msgstr ""
+
+#: whoohub/backends.py:173
+msgid ""
+"pacman could not remove the package (other packages may need it — see the "
+"log)"
+msgstr ""
+
+#: whoohub/backends.py:174
+#, python-brace-format
+msgid "{name} removed"
+msgstr ""
+
+#: whoohub/backends.py:187
+msgid "Could not add Flathub for your user"
+msgstr ""
+
+#: whoohub/backends.py:194
+msgid "Flatpak could not install the app"
+msgstr ""
+
+#: whoohub/backends.py:195
+msgid "Installed from Flathub"
+msgstr ""
+
+#: whoohub/backends.py:203
+msgid "Flatpak could not remove the app"
+msgstr ""
+
+#: whoohub/backends.py:204 whoohub/backends.py:366
+msgid "Removed"
+msgstr ""
+
+#: whoohub/backends.py:243
+msgid "Could not update the AUR sources"
+msgstr ""
+
+#: whoohub/backends.py:247
+msgid "Could not download the package from the AUR"
+msgstr ""
+
+#: whoohub/backends.py:254
+#, python-brace-format
+msgid ""
+"It needs packages that are not in the repositories (they are in the AUR "
+"too): {names}. Install them first."
+msgstr ""
+
+#: whoohub/backends.py:256
+#, python-brace-format
+msgid "Installing dependencies from the repositories: {names}"
+msgstr ""
+
+#: whoohub/backends.py:258
+msgid "Could not install the dependencies"
+msgstr ""
+
+#: whoohub/backends.py:259
+msgid "The build failed"
+msgstr ""
+
+#: whoohub/backends.py:264
+msgid "makepkg did not produce a package"
+msgstr ""
+
+#: whoohub/backends.py:266
+msgid "Could not install the built package"
+msgstr ""
+
+#: whoohub/backends.py:267
+#, python-brace-format
+msgid "{name} built and installed"
+msgstr ""
+
+#: whoohub/backends.py:299
+msgid "This app has no GitHub link — download it from the author's page"
+msgstr ""
+
+#: whoohub/backends.py:300
+#, python-brace-format
+msgid "Looking for the latest release on GitHub: {repo}"
+msgstr ""
+
+#: whoohub/backends.py:310
+msgid "(pre-release)"
+msgstr ""
+
+#: whoohub/backends.py:313
+msgid "The GitHub releases have no .AppImage file for x86_64"
+msgstr ""
+
+#: whoohub/backends.py:317
+#, python-brace-format
+msgid "Downloading {file} ({size} MB)…"
+msgstr ""
+
+#: whoohub/backends.py:351
+#, python-brace-format
+msgid "Saved to ~/Applications/{file}, a menu entry was added"
+msgstr ""
+
+#: whoohub/backends.py:360
+msgid "This app was not installed by whoohub"
+msgstr ""
+
+#: whoohub/backends.py:364
+#, python-brace-format
+msgid "Removed {path}"
+msgstr ""
+
+#: whoohub/catalog.py:42
+msgid "Featured"
+msgstr ""
+
+#: whoohub/catalog.py:43
+msgid "Games"
+msgstr ""
+
+#: whoohub/catalog.py:44
+msgid "Internet"
+msgstr ""
+
+#: whoohub/catalog.py:45
+msgid "Audio & Video"
+msgstr ""
+
+#: whoohub/catalog.py:46
+msgid "Graphics"
+msgstr ""
+
+#: whoohub/catalog.py:47
+msgid "Development"
+msgstr ""
+
+#: whoohub/catalog.py:48
+msgid "Office"
+msgstr ""
+
+#: whoohub/catalog.py:49
+msgid "Science & Education"
+msgstr ""
+
+#: whoohub/catalog.py:50
+msgid "System"
+msgstr ""
+
+#: whoohub/catalog.py:51
+msgid "Utilities"
+msgstr ""
+
+#: whoohub/catalog.py:310
+msgid "Reading the Arch repositories catalog…"
+msgstr ""
+
+#: whoohub/catalog.py:311
+msgid "Reading the Flathub catalog…"
+msgstr ""
+
+#: whoohub/catalog.py:312
+msgid "Reading the AppImage catalog…"
+msgstr ""
+
+#: whoohub/catalog.py:329
+msgid "Building the search index…"
+msgstr ""
+
+#: whoohub/ui.py:161
+msgid "Preparing the catalog…"
+msgstr ""
+
+#: whoohub/ui.py:162
+msgid "The first start can take up to a minute"
+msgstr ""
+
+#: whoohub/ui.py:171
+msgid "Downloading the AppImage catalog…"
+msgstr ""
+
+#: whoohub/ui.py:201
+#, python-brace-format
+msgid "Catalog updated: {count} apps"
+msgstr ""
+
+#: whoohub/ui.py:207
+msgid "The catalog is empty"
+msgstr ""
+
+#: whoohub/ui.py:209
+msgid ""
+"No sources found. Install archlinux-appstream-data for the Arch repositories "
+"and/or flatpak for Flathub, then start whoohub again."
+msgstr ""
+
+#: whoohub/ui.py:218
+msgid "Explore"
+msgstr ""
+
+#: whoohub/ui.py:219
+msgid "Installed"
+msgstr ""
+
+#: whoohub/ui.py:227
+msgid "Search apps…"
+msgstr ""
+
+#: whoohub/ui.py:232
+msgid "Rebuild catalog"
+msgstr ""
+
+#: whoohub/ui.py:233
+msgid "About whoohub"
+msgstr ""
+
+#: whoohub/ui.py:297 whoohub/ui.py:363 whoohub/ui.py:612
+msgid "installed"
+msgstr ""
+
+#: whoohub/ui.py:307
+msgid "More in the AUR"
+msgstr ""
+
+#: whoohub/ui.py:310
+msgid "Community packages: built on your computer from the packager's script."
+msgstr ""
+
+#: whoohub/ui.py:334
+#, python-brace-format
+msgid "Nothing found for “{text}” in the catalog"
+msgstr ""
+
+#: whoohub/ui.py:365
+msgid "out of date"
+msgstr ""
+
+#: whoohub/ui.py:396
+msgid "Not from the repositories (AUR or built by hand)"
+msgstr ""
+
+#: whoohub/ui.py:400
+msgid "Nothing from the catalog is installed yet"
+msgstr ""
+
+#: whoohub/ui.py:418 whoohub/ui.py:427 whoohub/ui.py:641 whoohub/ui.py:742
+msgid "Remove"
+msgstr ""
+
+#: whoohub/ui.py:424
+#, python-brace-format
+msgid "Remove {name}?"
+msgstr ""
+
+#: whoohub/ui.py:425
+msgid "The app and the dependencies nothing else needs will be removed."
+msgstr ""
+
+#: whoohub/ui.py:426 whoohub/ui.py:481 whoohub/ui.py:759
+msgid "Cancel"
+msgstr ""
+
+#: whoohub/ui.py:491
+msgid "Details"
+msgstr ""
+
+#: whoohub/ui.py:503
+msgid "Working… (a password prompt, if any, comes from polkit)"
+msgstr ""
+
+#: whoohub/ui.py:564
+msgid "Source:"
+msgstr ""
+
+#: whoohub/ui.py:593
+#, python-brace-format
+msgid "License: {license}"
+msgstr ""
+
+#: whoohub/ui.py:596 whoohub/ui.py:713
+msgid "Website"
+msgstr ""
+
+#: whoohub/ui.py:631
+#, python-brace-format
+msgid "Repository: {repo}, package {pkg}."
+msgstr ""
+
+#: whoohub/ui.py:633
+#, python-brace-format
+msgid "ID: {id}."
+msgstr ""
+
+#: whoohub/ui.py:635
+#, python-brace-format
+msgid "GitHub: {repo}."
+msgstr ""
+
+#: whoohub/ui.py:636
+msgid ""
+"The file is published on the author's website — whoohub opens the download "
+"page."
+msgstr ""
+
+#: whoohub/ui.py:639
+msgid "Open"
+msgstr ""
+
+#: whoohub/ui.py:646
+msgid "Open download page"
+msgstr ""
+
+#: whoohub/ui.py:650
+msgid "Install"
+msgstr ""
+
+#: whoohub/ui.py:677
+#, python-brace-format
+msgid "Source: {source}"
+msgstr ""
+
+#: whoohub/ui.py:682
+msgid "Could not find how to start it — look for the app in your menu"
+msgstr ""
+
+#: whoohub/ui.py:695
+#, python-brace-format
+msgid "Version {version}  ·  ♥ {votes}  ·  maintainer: {maintainer}"
+msgstr ""
+
+#: whoohub/ui.py:696
+msgid "none (orphan)"
+msgstr ""
+
+#: whoohub/ui.py:700
+msgid ""
+"AUR packages are built from a script (PKGBUILD) written by the packager, and "
+"it runs on your computer."
+msgstr ""
+
+#: whoohub/ui.py:703
+msgid "Flagged out of date."
+msgstr ""
+
+#: whoohub/ui.py:705
+msgid "The package has no maintainer."
+msgstr ""
+
+#: whoohub/ui.py:727
+msgid "Loading…"
+msgstr ""
+
+#: whoohub/ui.py:733
+#, python-brace-format
+msgid "Could not load it: {error}"
+msgstr ""
+
+#: whoohub/ui.py:745
+#, python-brace-format
+msgid "Installed: {version}"
+msgstr ""
+
+#: whoohub/ui.py:748 whoohub/ui.py:761
+msgid "Build and install"
+msgstr ""
+
+#: whoohub/ui.py:751 whoohub/ui.py:760
+msgid "View PKGBUILD"
+msgstr ""
+
+#: whoohub/ui.py:756
+#, python-brace-format
+msgid "Build {name}?"
+msgstr ""
+
+#: whoohub/ui.py:757
+msgid ""
+"The build script (PKGBUILD) was written by the packager, not by Arch Linux, "
+"and it will run on your computer. If you have not read it yet, do it first."
+msgstr ""
+
+#: whoohub/ui.py:807
+msgid ""
+"One app store for Arch-based systems: repositories, Flathub, AUR and "
+"AppImage."
+msgstr ""

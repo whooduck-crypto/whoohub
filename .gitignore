@@ -1,0 +1,8 @@
+build/
+__pycache__/
+*.pyc
+*.mo
+# makepkg output when testing packaging/aur
+packaging/aur/src/
+packaging/aur/pkg/
+packaging/aur/*.tar.*

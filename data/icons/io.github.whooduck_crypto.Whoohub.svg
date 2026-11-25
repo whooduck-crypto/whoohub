@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3584e4"/>
+      <stop offset="1" stop-color="#9141ac"/>
+    </linearGradient>
+    <linearGradient id="bag" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e8e6f3"/>
+    </linearGradient>
+  </defs>
+  <!-- tile -->
+  <rect x="8" y="8" width="112" height="112" rx="26" fill="url(#bg)"/>
+  <!-- bag handle -->
+  <path d="M46 46 V38 a18 18 0 0 1 36 0 V46" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+  <!-- bag body -->
+  <path d="M30 46 H98 L93 98 a8 8 0 0 1 -8 7 H43 a8 8 0 0 1 -8 -7 Z" fill="url(#bag)"/>
+  <!-- owl ear tufts -->
+  <path d="M44 58 L50 50 L56 58 Z M72 58 L78 50 L84 58 Z" fill="#9141ac"/>
+  <!-- owl eyes -->
+  <circle cx="51" cy="70" r="11" fill="#ffffff" stroke="#9141ac" stroke-width="4"/>
+  <circle cx="77" cy="70" r="11" fill="#ffffff" stroke="#9141ac" stroke-width="4"/>
+  <circle cx="53" cy="71" r="4.5" fill="#241f31"/>
+  <circle cx="79" cy="71" r="4.5" fill="#241f31"/>
+  <!-- beak -->
+  <path d="M60 80 L68 80 L64 88 Z" fill="#f5c211"/>
+</svg>

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+Name=whoohub
+GenericName=App Store
+GenericName[ru]=Магазин приложений
+Comment=Apps from the Arch repositories, Flathub, AUR and AppImage in one place
+Comment[ru]=Программы из репозиториев Arch, Flathub, AUR и AppImage в одном месте
+Exec=whoohub
+Icon=io.github.whooduck_crypto.Whoohub
+Terminal=false
+Categories=System;PackageManager;GTK;
+Keywords=store;apps;software;install;flatpak;flathub;aur;appimage;pacman;
+Keywords[ru]=магазин;программы;приложения;установить;flatpak;flathub;aur;appimage;pacman;
+StartupNotify=true

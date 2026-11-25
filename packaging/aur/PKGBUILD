@@ -1,0 +1,25 @@
+# Maintainer: whooduck-crypto <whooduck-crypto at users dot noreply dot github dot com>
+pkgname=whoohub
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="One app store for Arch: repositories, Flathub, AUR and AppImage"
+arch=('any')
+url="https://github.com/whooduck-crypto/whoohub"
+license=('GPL-3.0-or-later')
+depends=('python' 'python-gobject' 'gtk4>=1:4.12' 'libadwaita>=1:1.6' 'polkit' 'archlinux-appstream-data')
+makedepends=('gettext')
+optdepends=('flatpak: install apps from Flathub'
+            'git: install packages from the AUR'
+            'base-devel: build packages from the AUR')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('SKIP')  # replace with the real sum after tagging: updpkgsums
+
+build() {
+    cd "$pkgname-$pkgver"
+    make
+}
+
+package() {
+    cd "$pkgname-$pkgver"
+    make DESTDIR="$pkgdir" PREFIX=/usr install
+}

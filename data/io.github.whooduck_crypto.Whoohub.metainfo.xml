@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.whooduck_crypto.Whoohub</id>
+  <name>whoohub</name>
+  <summary>One app store for Arch: repositories, Flathub, AUR and AppImage</summary>
+  <summary xml:lang="ru">Один магазин для Arch: репозитории, Flathub, AUR и AppImage</summary>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <developer id="io.github.whooduck_crypto">
+    <name>whooduck-crypto</name>
+  </developer>
+  <description>
+    <p>
+      whoohub gathers software from every place an Arch-based system can get it — the official
+      repositories, Flathub, the AUR and AppImageHub — and shows each app once, with a choice of where to
+      install it from.
+    </p>
+    <p xml:lang="ru">
+      whoohub собирает программы из всех источников, доступных системе на базе Arch: официальных
+      репозиториев, Flathub, AUR и AppImageHub, — и показывает каждую программу один раз, с выбором,
+      откуда её установить.
+    </p>
+    <ul>
+      <li>Browse by category or search across all sources at once</li>
+      <li xml:lang="ru">Обзор по категориям и поиск сразу по всем источникам</li>
+      <li>Repository packages install through the polkit password prompt, Flatpaks per user without one</li>
+      <li xml:lang="ru">Пакеты из репозиториев ставятся через окно пароля polkit, Flatpak — в профиль без пароля</li>
+      <li>AUR packages show their PKGBUILD for review before they are built</li>
+      <li xml:lang="ru">Перед сборкой пакета из AUR можно просмотреть его PKGBUILD</li>
+      <li>AppImages are downloaded from the author's GitHub releases and get a menu entry</li>
+      <li xml:lang="ru">AppImage скачивается из выпусков автора на GitHub и получает ярлык в меню</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">io.github.whooduck_crypto.Whoohub.desktop</launchable>
+  <url type="homepage">https://github.com/whooduck-crypto/whoohub</url>
+  <url type="bugtracker">https://github.com/whooduck-crypto/whoohub/issues</url>
+  <url type="vcs-browser">https://github.com/whooduck-crypto/whoohub</url>
+  <categories>
+    <category>System</category>
+    <category>PackageManager</category>
+  </categories>
+  <content_rating type="oars-1.1"/>
+  <provides>
+    <binary>whoohub</binary>
+  </provides>
+  <releases>
+    <release version="0.1.0" date="2026-11-25">
+      <description>
+        <p>First release.</p>
+      </description>
+    </release>
+  </releases>
+</component>
