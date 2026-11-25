@@ -36,11 +36,24 @@ choice of where to install it from — and a plain explanation of how the source
 
 ## Install
 
-### From the AUR
+### Ready-made package (recommended)
 
 ```sh
-yay -S whoohub    # or any other AUR helper
+sudo pacman -U https://github.com/whooduck-crypto/whoohub/releases/download/v0.1.0/whoohub-0.1.0-1-any.pkg.tar.zst
 ```
+
+pacman pulls in the dependencies itself. Newer versions are on the
+[Releases](https://github.com/whooduck-crypto/whoohub/releases) page.
+
+### Build the package yourself
+
+```sh
+git clone https://github.com/whooduck-crypto/whoohub.git
+cd whoohub/packaging/aur
+makepkg -si
+```
+
+An AUR package is planned — AUR registration is closed for now.
 
 ### From source
 
