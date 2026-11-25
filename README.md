@@ -32,7 +32,7 @@ choice of where to install it from — and a plain explanation of how the source
 - **AppImage** — the AppImageHub catalog; whoohub downloads the latest stable release from the author's
   GitHub into `~/Applications` and adds a menu entry.
 - **Installed** view with Open and Remove buttons.
-- **Update check** — once a day whoohub asks GitHub for its latest release and offers to update; a package install updates itself (download, checksum check, polkit prompt). Turn it off in the menu.
+- **Update check** — once a day whoohub asks GitHub for its latest release and offers to update right from the app: a package install via `pacman -U`, a `make install` copy by reinstalling the release sources into the same prefix — always after verifying the checksum GitHub publishes. Turn it off in the menu.
 - Follows the system light/dark style (libadwaita). English and Russian; more languages welcome.
 
 ## Install
@@ -40,7 +40,7 @@ choice of where to install it from — and a plain explanation of how the source
 ### Ready-made package (recommended)
 
 ```sh
-sudo pacman -U https://github.com/whooduck-crypto/whoohub/releases/download/v0.1.1/whoohub-0.1.1-1-any.pkg.tar.zst
+sudo pacman -U https://github.com/whooduck-crypto/whoohub/releases/download/v0.1.2/whoohub-0.1.2-1-any.pkg.tar.zst
 ```
 
 pacman pulls in the dependencies itself. Newer versions are on the

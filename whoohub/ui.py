@@ -485,11 +485,10 @@ class StoreWindow(Adw.ApplicationWindow):
         threading.Thread(target=work, daemon=True).start()
 
     def offer_update(self, info):
-        can_install = bool(info["asset_url"]) and updates.install_kind() == "pacman"
+        can_install, why_not = updates.can_update_in_app(info)
         body = _("You have {current}.").format(current=updates.current_version())
-        if not can_install:
-            body += " " + _("whoohub was not installed as a package, so it cannot update itself — "
-                            "the release page has the new version.")
+        if why_not:
+            body += " " + why_not
         d = Adw.AlertDialog(heading=_("whoohub {version} is available").format(version=info["version"]), body=body)
         notes = release_notes_text(info["notes"])
         if notes:  # left-aligned and scrollable: release notes can be long

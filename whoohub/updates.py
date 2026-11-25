@@ -8,7 +8,9 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
+import tarfile
 import time
 import urllib.request
 from pathlib import Path
@@ -57,12 +59,31 @@ def is_newer(remote, local):
 
 
 def install_kind():
-    """'pacman' if whoohub was installed as a package (it can update itself), otherwise 'source'."""
+    """How this copy of whoohub was installed — that decides how it can update itself:
+      ("pacman", None)    a package: download the release package, pacman -U through polkit
+      ("prefix", prefix)  `make install PREFIX=…`: download the release sources, make install into the same prefix
+      ("checkout", root)  running from a source tree: update with git pull, not from the app
+    """
+    here = Path(__file__).resolve()
     try:
-        r = subprocess.run(["pacman", "-Qqo", str(Path(__file__).resolve())], capture_output=True, text=True)
-        return "pacman" if r.returncode == 0 and r.stdout.strip() == "whoohub" else "source"
+        r = subprocess.run(["pacman", "-Qqo", str(here)], capture_output=True, text=True)
+        if r.returncode == 0 and r.stdout.strip() == "whoohub":
+            return "pacman", None
     except OSError:
-        return "source"
+        pass
+    # installed layout: <prefix>/share/whoohub/whoohub/updates.py
+    if here.parent.name == "whoohub" and here.parents[1].name == "whoohub" and here.parents[2].name == "share":
+        return "prefix", here.parents[3]
+    return "checkout", here.parents[1]
+
+
+def _asset(rel, pattern):
+    a = next((a for a in rel.get("assets") or [] if re.fullmatch(pattern, a.get("name", ""))), None)
+    if not a:
+        return {"url": "", "name": "", "sha256": ""}
+    digest = a.get("digest") or ""
+    return {"url": a["browser_download_url"], "name": a["name"],
+            "sha256": digest.split(":", 1)[1] if digest.startswith("sha256:") else ""}
 
 
 # ── checking ───────────────────────────────────────────────────────────────────────────────────────────
@@ -87,40 +108,94 @@ def check(force=False):
         return None
     if not force and s["skipped"] == version:
         return None
-    asset = next((a for a in rel.get("assets") or []
-                  if re.fullmatch(r"whoohub-.+-any\.pkg\.tar\.zst", a.get("name", ""))), None)
-    digest = (asset or {}).get("digest") or ""
     return {
         "version": version,
         "notes": (rel.get("body") or "").strip(),
         "page": rel.get("html_url") or f"https://github.com/{REPO}/releases",
-        "asset_url": asset["browser_download_url"] if asset else "",
-        "asset_name": asset["name"] if asset else "",
-        "sha256": digest.split(":", 1)[1] if digest.startswith("sha256:") else "",
+        "package": _asset(rel, r"whoohub-.+-any\.pkg\.tar\.zst"),   # for package installs
+        "source": _asset(rel, r"whoohub-[\d.]+\.tar\.gz"),           # for make-install installs
     }
 
 
+def can_update_in_app(info):
+    """(True, "") or (False, reason shown in the update dialog)."""
+    kind, _where = install_kind()
+    if kind == "pacman":
+        return (True, "") if info["package"]["url"] else \
+            (False, _("This release has no package attached — the release page has the new version."))
+    if kind == "prefix":
+        if not info["source"]["url"]:
+            return False, _("This release has no source archive attached — the release page has the new version.")
+        missing = [t for t in ("make", "msgfmt") if not shutil.which(t)]
+        if missing:
+            return False, _("Updating needs {tools} (sudo pacman -S make gettext).").format(tools=", ".join(missing))
+        return True, ""
+    return False, _("whoohub runs from a source folder — update it with git pull.")
+
+
 # ── updating ───────────────────────────────────────────────────────────────────────────────────────────
+def _download(job, asset):
+    """Download a release asset into the cache, verifying the sha256 GitHub publishes for it."""
+    if not asset["sha256"]:
+        raise JobError(_("GitHub did not publish a checksum for {file} — not installing it").format(file=asset["name"]))
+    dest = paths.CACHE / asset["name"]
+    job.on_line(_("Downloading {file}…").format(file=asset["name"]))
+    h = hashlib.sha256()
+    with urllib.request.urlopen(urllib.request.Request(asset["url"], headers=UA), timeout=60) as r, \
+            open(dest, "wb") as f:
+        while chunk := r.read(1 << 20):
+            if job.cancelled:
+                raise JobError(_("Cancelled"))
+            f.write(chunk)
+            h.update(chunk)
+    if h.hexdigest() != asset["sha256"]:
+        dest.unlink(missing_ok=True)
+        raise JobError(_("The downloaded file is damaged (checksum mismatch) — nothing was installed"))
+    job.on_line(_("Checksum OK"))
+    return dest
+
+
+def _writable(prefix):
+    """Can this user install into prefix without root? (~/.local: yes, /usr/local: no)"""
+    p = Path(prefix) / "share" / "whoohub"
+    while not p.exists():
+        p = p.parent
+    return os.access(p, os.W_OK)
+
+
 def update_steps(info):
-    def steps(job):
-        if not info["asset_url"]:
-            raise JobError(_("This release has no package to install — open the release page instead"))
-        dest = paths.CACHE / info["asset_name"]
-        job.on_line(_("Downloading {file}…").format(file=info["asset_name"]))
-        h = hashlib.sha256()
-        with urllib.request.urlopen(urllib.request.Request(info["asset_url"], headers=UA), timeout=60) as r, \
-                open(dest, "wb") as f:
-            while chunk := r.read(1 << 20):
-                if job.cancelled:
-                    raise JobError(_("Cancelled"))
-                f.write(chunk)
-                h.update(chunk)
-        if info["sha256"]:
-            if h.hexdigest() != info["sha256"]:
-                dest.unlink(missing_ok=True)
-                raise JobError(_("The downloaded file is damaged (checksum mismatch) — nothing was installed"))
-            job.on_line(_("Checksum OK"))
+    kind, where = install_kind()
+
+    def from_package(job):
+        dest = _download(job, info["package"])
         job.run(["pkexec", "pacman", "-U", "--noconfirm", str(dest)], what=_("pacman could not install the update"))
         dest.unlink(missing_ok=True)
+
+    def from_source(job):
+        archive = _download(job, info["source"])
+        work = paths.CACHE / "update-src"
+        shutil.rmtree(work, ignore_errors=True)
+        work.mkdir()
+        with tarfile.open(archive) as tar:
+            tar.extractall(work, filter="data")  # "data" refuses absolute paths, .. and device files
+        tops = [d for d in work.iterdir() if d.is_dir()]
+        if len(tops) != 1 or not (tops[0] / "Makefile").exists():
+            raise JobError(_("The source archive has an unexpected layout — nothing was installed"))
+        job.run(["make", "-C", str(tops[0])], what=_("Building the translations failed — see the log"))
+        # translations are built as the user above; only the copying may need root
+        argv = ["make", "-C", str(tops[0]), "install", f"PREFIX={where}"]
+        if not _writable(where):
+            argv = ["pkexec", "env", f"PATH={os.environ.get('PATH', '/usr/bin')}"] + argv
+        job.run(argv, what=_("make install failed — see the log"))
+        shutil.rmtree(work, ignore_errors=True)
+        archive.unlink(missing_ok=True)
+
+    def steps(job):
+        if kind == "pacman":
+            from_package(job)
+        elif kind == "prefix":
+            from_source(job)
+        else:
+            raise JobError(_("whoohub runs from a source folder — update it with git pull."))
         return _("whoohub {version} installed").format(version=info["version"])
     return steps
