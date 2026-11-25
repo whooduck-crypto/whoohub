@@ -2,7 +2,9 @@
 """whoohub user interface (GTK 4 + libadwaita)."""
 import hashlib
 import os
+import re
 import subprocess
+import sys
 import threading
 import time
 import urllib.request
@@ -15,7 +17,7 @@ gi.require_version("Gdk", "4.0")
 gi.require_version("Pango", "1.0")
 from gi.repository import Adw, Gdk, Gio, GLib, Gtk, Pango  # noqa: E402
 
-from . import APP_ID, __version__, backends, catalog, paths  # noqa: E402
+from . import APP_ID, __version__, backends, catalog, paths, updates  # noqa: E402
 from .backends import source_info  # noqa: E402
 from .i18n import _  # noqa: E402
 
@@ -146,6 +148,28 @@ def tile(title, summary, icon_src, badges, on_click, icon_name=None):
     return btn
 
 
+def release_notes_text(md):
+    """GitHub release notes are Markdown; show them as plain text (bullets kept, markup dropped)."""
+    out = []
+    for line in md.splitlines():
+        line = line.rstrip()
+        line = re.sub(r"^\s*[-*+]\s+", "• ", line)          # list items
+        line = re.sub(r"^#+\s*", "", line)                   # headings
+        line = re.sub(r"\*\*(.+?)\*\*|__(.+?)__", lambda m: m.group(1) or m.group(2), line)
+        line = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", line)  # [text](url) -> text
+        out.append(line.replace("`", ""))
+    return re.sub(r"\n{3,}", "\n\n", "\n".join(out)).strip()
+
+
+def restart_app():
+    """Replace this process with a fresh whoohub (after an update)."""
+    if sys.argv[0].endswith("__main__.py"):          # started as `python3 -m whoohub`
+        argv = [sys.executable, "-m", "whoohub"]
+    else:                                            # the installed launcher script
+        argv = [sys.executable, sys.argv[0]]
+    os.execv(sys.executable, argv)
+
+
 # ── main window ────────────────────────────────────────────────────────────────────────────────────────
 class StoreWindow(Adw.ApplicationWindow):
     def __init__(self, app):
@@ -232,8 +256,14 @@ class StoreWindow(Adw.ApplicationWindow):
         self.search.set_key_capture_widget(self)
         header.pack_start(self.search)
         menu = Gio.Menu()
-        menu.append(_("Rebuild catalog"), "app.rebuild")
-        menu.append(_("About whoohub"), "app.about")
+        upd = Gio.Menu()
+        upd.append(_("Check for updates"), "app.check-updates")
+        upd.append(_("Check for updates automatically"), "app.auto-update")
+        menu.append_section(None, upd)
+        other = Gio.Menu()
+        other.append(_("Rebuild catalog"), "app.rebuild")
+        other.append(_("About whoohub"), "app.about")
+        menu.append_section(None, other)
         header.pack_end(Gtk.MenuButton(icon_name="open-menu-symbolic", menu_model=menu))
 
         tv = Adw.ToolbarView(content=self.outer)
@@ -242,12 +272,14 @@ class StoreWindow(Adw.ApplicationWindow):
         self.toasts.set_child(self.nav)
         self.show_section("featured")
         # debugging aids: WHOOHUB_OPEN=<app id>, WHOOHUB_SEARCH=<text>, WHOOHUB_VIEW=installed
+        # (also WHOOHUB_DEV=1 for a separate instance, WHOOHUB_FAKE_VERSION=0.0.1 to test the update dialog)
         if os.environ.get("WHOOHUB_SEARCH"):
             self.search.set_text(os.environ["WHOOHUB_SEARCH"])
         elif os.environ.get("WHOOHUB_OPEN"):
             self.open_app(os.environ["WHOOHUB_OPEN"])
         elif os.environ.get("WHOOHUB_VIEW"):
             self.views.set_visible_child_name(os.environ["WHOOHUB_VIEW"])
+        self.check_updates(manual=False)
 
     def toast(self, text):
         self.toasts.add_toast(Adw.Toast(title=GLib.markup_escape_text(text), timeout=4))
@@ -436,6 +468,72 @@ class StoreWindow(Adw.ApplicationWindow):
                              and self.refresh_installed())
         d.connect("response", resp)
         d.present(self)
+
+    # ── self-update ────────────────────────────────────────────────────────────────────────────────────
+    def check_updates(self, manual):
+        def work():
+            try:
+                info = updates.check(force=manual)
+            except (OSError, ValueError):
+                if manual:
+                    idle(self.toast, _("Could not check for updates — no connection to GitHub?"))
+                return
+            if info:
+                idle(self.offer_update, info)
+            elif manual:
+                idle(self.toast, _("You have the latest version ({version})").format(version=updates.current_version()))
+        threading.Thread(target=work, daemon=True).start()
+
+    def offer_update(self, info):
+        can_install = bool(info["asset_url"]) and updates.install_kind() == "pacman"
+        body = _("You have {current}.").format(current=updates.current_version())
+        if not can_install:
+            body += " " + _("whoohub was not installed as a package, so it cannot update itself — "
+                            "the release page has the new version.")
+        d = Adw.AlertDialog(heading=_("whoohub {version} is available").format(version=info["version"]), body=body)
+        notes = release_notes_text(info["notes"])
+        if notes:  # left-aligned and scrollable: release notes can be long
+            # not selectable: a focused selectable label gets all its text selected
+            lab = Gtk.Label(label=notes, xalign=0, wrap=True, css_classes=["body"])
+            d.set_extra_child(Gtk.ScrolledWindow(child=lab, hscrollbar_policy=Gtk.PolicyType.NEVER,
+                                                 propagate_natural_height=True, max_content_height=220))
+        d.add_response("later", _("Later"))
+        d.add_response("skip", _("Skip this version"))
+        if can_install:
+            d.add_response("update", _("Update"))
+            d.set_response_appearance("update", Adw.ResponseAppearance.SUGGESTED)
+            d.set_default_response("update")
+        else:
+            d.add_response("open", _("Open release page"))
+            d.set_response_appearance("open", Adw.ResponseAppearance.SUGGESTED)
+        d.set_close_response("later")
+
+        def resp(_d, r):
+            if r == "skip":
+                updates.set_setting("skipped", info["version"])
+            elif r == "open":
+                Gtk.UriLauncher(uri=info["page"]).launch(self, None, None, None)
+            elif r == "update":
+                self.run_update(info)
+        d.connect("response", resp)
+        d.present(self)
+
+    def run_update(self, info):
+        dlg = Adw.Dialog(title=_("Updating whoohub"), content_width=520)
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=12, margin_top=18, margin_bottom=18,
+                      margin_start=18, margin_end=18)
+        jobui = JobUI()
+        box.append(jobui)
+        restart = Gtk.Button(label=_("Restart whoohub"), css_classes=["suggested-action", "pill"],
+                             halign=Gtk.Align.CENTER, visible=False)
+        restart.connect("clicked", lambda *_a: restart_app())
+        box.append(restart)
+        tv = Adw.ToolbarView(content=box)
+        tv.add_top_bar(Adw.HeaderBar())
+        dlg.set_child(tv)
+        jobui.on_end = lambda ok: restart.set_visible(ok)
+        dlg.present(self)
+        self.run_job(updates.update_steps(info), jobui)
 
     # ── running installs/removals ──────────────────────────────────────────────────────────────────────
     def run_job(self, steps, ui, done=None):
@@ -776,12 +874,19 @@ class AurPage(Adw.NavigationPage):
 
 class StoreApp(Adw.Application):
     def __init__(self):
-        super().__init__(application_id=APP_ID, flags=Gio.ApplicationFlags.DEFAULT_FLAGS)
+        # WHOOHUB_DEV=1: a separate instance, so a test run does not just raise an already open window
+        flags = Gio.ApplicationFlags.NON_UNIQUE if os.environ.get("WHOOHUB_DEV") else Gio.ApplicationFlags.DEFAULT_FLAGS
+        super().__init__(application_id=APP_ID, flags=flags)
         self.win = None
-        for name, cb in (("rebuild", self._rebuild), ("about", self._about)):
+        for name, cb in (("rebuild", self._rebuild), ("about", self._about),
+                         ("check-updates", lambda *_a: self.win and self.win.check_updates(manual=True))):
             act = Gio.SimpleAction.new(name, None)
             act.connect("activate", cb)
             self.add_action(act)
+        auto = Gio.SimpleAction.new_stateful("auto-update", None,
+                                             GLib.Variant.new_boolean(updates.load_settings()["auto_check"]))
+        auto.connect("change-state", self._toggle_auto_update)
+        self.add_action(auto)
 
     def do_startup(self):
         Adw.Application.do_startup(self)
@@ -794,6 +899,11 @@ class StoreApp(Adw.Application):
         if not self.win:
             self.win = StoreWindow(self)
         self.win.present()
+
+    @staticmethod
+    def _toggle_auto_update(action, value):
+        action.set_state(value)
+        updates.set_setting("auto_check", value.get_boolean())
 
     def _rebuild(self, *_a):
         paths.DB.unlink(missing_ok=True)

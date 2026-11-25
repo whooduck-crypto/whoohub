@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: whoohub 0.1.0\n"
 "Report-Msgid-Bugs-To: https://github.com/whooduck-crypto/whoohub/issues\n"
-"POT-Creation-Date: 2026-11-25 23:27+0500\n"
+"POT-Creation-Date: 2026-11-25 23:47+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,6 +57,7 @@ msgid ""
 msgstr ""
 
 #: whoohub/backends.py:136 whoohub/backends.py:144 whoohub/backends.py:326
+#: whoohub/updates.py:115
 msgid "Cancelled"
 msgstr ""
 
@@ -197,276 +198,360 @@ msgstr ""
 msgid "Removed {path}"
 msgstr ""
 
-#: whoohub/catalog.py:42
+#: whoohub/catalog.py:43
 msgid "Featured"
 msgstr ""
 
-#: whoohub/catalog.py:43
+#: whoohub/catalog.py:44
 msgid "Games"
 msgstr ""
 
-#: whoohub/catalog.py:44
+#: whoohub/catalog.py:45
 msgid "Internet"
 msgstr ""
 
-#: whoohub/catalog.py:45
+#: whoohub/catalog.py:46
 msgid "Audio & Video"
 msgstr ""
 
-#: whoohub/catalog.py:46
+#: whoohub/catalog.py:47
 msgid "Graphics"
 msgstr ""
 
-#: whoohub/catalog.py:47
+#: whoohub/catalog.py:48
 msgid "Development"
 msgstr ""
 
-#: whoohub/catalog.py:48
+#: whoohub/catalog.py:49
 msgid "Office"
 msgstr ""
 
-#: whoohub/catalog.py:49
+#: whoohub/catalog.py:50
 msgid "Science & Education"
 msgstr ""
 
-#: whoohub/catalog.py:50
+#: whoohub/catalog.py:51
 msgid "System"
 msgstr ""
 
-#: whoohub/catalog.py:51
+#: whoohub/catalog.py:52
 msgid "Utilities"
 msgstr ""
 
-#: whoohub/catalog.py:310
+#: whoohub/catalog.py:330
 msgid "Reading the Arch repositories catalog…"
 msgstr ""
 
-#: whoohub/catalog.py:311
+#: whoohub/catalog.py:331
 msgid "Reading the Flathub catalog…"
 msgstr ""
 
-#: whoohub/catalog.py:312
+#: whoohub/catalog.py:332
 msgid "Reading the AppImage catalog…"
 msgstr ""
 
-#: whoohub/catalog.py:329
+#: whoohub/catalog.py:349
 msgid "Building the search index…"
 msgstr ""
 
-#: whoohub/ui.py:161
+#: whoohub/ui.py:188
 msgid "Preparing the catalog…"
 msgstr ""
 
-#: whoohub/ui.py:162
+#: whoohub/ui.py:189
 msgid "The first start can take up to a minute"
 msgstr ""
 
-#: whoohub/ui.py:171
+#: whoohub/ui.py:198
 msgid "Downloading the AppImage catalog…"
 msgstr ""
 
-#: whoohub/ui.py:201
+#: whoohub/ui.py:228
 #, python-brace-format
 msgid "Catalog updated: {count} apps"
 msgstr ""
 
-#: whoohub/ui.py:207
+#: whoohub/ui.py:234
 msgid "The catalog is empty"
 msgstr ""
 
-#: whoohub/ui.py:209
+#: whoohub/ui.py:236
 msgid ""
 "No sources found. Install archlinux-appstream-data for the Arch repositories "
 "and/or flatpak for Flathub, then start whoohub again."
 msgstr ""
 
-#: whoohub/ui.py:218
+#: whoohub/ui.py:245
 msgid "Explore"
 msgstr ""
 
-#: whoohub/ui.py:219
+#: whoohub/ui.py:246
 msgid "Installed"
 msgstr ""
 
-#: whoohub/ui.py:227
+#: whoohub/ui.py:254
 msgid "Search apps…"
 msgstr ""
 
-#: whoohub/ui.py:232
+#: whoohub/ui.py:260
+msgid "Check for updates"
+msgstr ""
+
+#: whoohub/ui.py:261
+msgid "Check for updates automatically"
+msgstr ""
+
+#: whoohub/ui.py:264
 msgid "Rebuild catalog"
 msgstr ""
 
-#: whoohub/ui.py:233
+#: whoohub/ui.py:265
 msgid "About whoohub"
 msgstr ""
 
-#: whoohub/ui.py:297 whoohub/ui.py:363 whoohub/ui.py:612
+#: whoohub/ui.py:332 whoohub/ui.py:398 whoohub/ui.py:713
 msgid "installed"
 msgstr ""
 
-#: whoohub/ui.py:307
+#: whoohub/ui.py:342
 msgid "More in the AUR"
 msgstr ""
 
-#: whoohub/ui.py:310
+#: whoohub/ui.py:345
 msgid "Community packages: built on your computer from the packager's script."
 msgstr ""
 
-#: whoohub/ui.py:334
+#: whoohub/ui.py:369
 #, python-brace-format
 msgid "Nothing found for “{text}” in the catalog"
 msgstr ""
 
-#: whoohub/ui.py:365
+#: whoohub/ui.py:400
 msgid "out of date"
 msgstr ""
 
-#: whoohub/ui.py:396
+#: whoohub/ui.py:431
 msgid "Not from the repositories (AUR or built by hand)"
 msgstr ""
 
-#: whoohub/ui.py:400
+#: whoohub/ui.py:435
 msgid "Nothing from the catalog is installed yet"
 msgstr ""
 
-#: whoohub/ui.py:418 whoohub/ui.py:427 whoohub/ui.py:641 whoohub/ui.py:742
+#: whoohub/ui.py:453 whoohub/ui.py:462 whoohub/ui.py:742 whoohub/ui.py:843
 msgid "Remove"
 msgstr ""
 
-#: whoohub/ui.py:424
+#: whoohub/ui.py:459
 #, python-brace-format
 msgid "Remove {name}?"
 msgstr ""
 
-#: whoohub/ui.py:425
+#: whoohub/ui.py:460
 msgid "The app and the dependencies nothing else needs will be removed."
 msgstr ""
 
-#: whoohub/ui.py:426 whoohub/ui.py:481 whoohub/ui.py:759
+#: whoohub/ui.py:461 whoohub/ui.py:582 whoohub/ui.py:860
 msgid "Cancel"
 msgstr ""
 
+#: whoohub/ui.py:479
+msgid "Could not check for updates — no connection to GitHub?"
+msgstr ""
+
+#: whoohub/ui.py:484
+#, python-brace-format
+msgid "You have the latest version ({version})"
+msgstr ""
+
+#: whoohub/ui.py:489
+#, python-brace-format
+msgid "You have {current}."
+msgstr ""
+
 #: whoohub/ui.py:491
-msgid "Details"
+msgid ""
+"whoohub was not installed as a package, so it cannot update itself — the "
+"release page has the new version."
+msgstr ""
+
+#: whoohub/ui.py:493
+#, python-brace-format
+msgid "whoohub {version} is available"
+msgstr ""
+
+#: whoohub/ui.py:500
+msgid "Later"
+msgstr ""
+
+#: whoohub/ui.py:501
+msgid "Skip this version"
 msgstr ""
 
 #: whoohub/ui.py:503
+msgid "Update"
+msgstr ""
+
+#: whoohub/ui.py:507
+msgid "Open release page"
+msgstr ""
+
+#: whoohub/ui.py:522
+msgid "Updating whoohub"
+msgstr ""
+
+#: whoohub/ui.py:527
+msgid "Restart whoohub"
+msgstr ""
+
+#: whoohub/ui.py:592
+msgid "Details"
+msgstr ""
+
+#: whoohub/ui.py:604
 msgid "Working… (a password prompt, if any, comes from polkit)"
 msgstr ""
 
-#: whoohub/ui.py:564
+#: whoohub/ui.py:665
 msgid "Source:"
 msgstr ""
 
-#: whoohub/ui.py:593
+#: whoohub/ui.py:694
 #, python-brace-format
 msgid "License: {license}"
 msgstr ""
 
-#: whoohub/ui.py:596 whoohub/ui.py:713
+#: whoohub/ui.py:697 whoohub/ui.py:814
 msgid "Website"
 msgstr ""
 
-#: whoohub/ui.py:631
+#: whoohub/ui.py:732
 #, python-brace-format
 msgid "Repository: {repo}, package {pkg}."
 msgstr ""
 
-#: whoohub/ui.py:633
+#: whoohub/ui.py:734
 #, python-brace-format
 msgid "ID: {id}."
 msgstr ""
 
-#: whoohub/ui.py:635
+#: whoohub/ui.py:736
 #, python-brace-format
 msgid "GitHub: {repo}."
 msgstr ""
 
-#: whoohub/ui.py:636
+#: whoohub/ui.py:737
 msgid ""
 "The file is published on the author's website — whoohub opens the download "
 "page."
 msgstr ""
 
-#: whoohub/ui.py:639
+#: whoohub/ui.py:740
 msgid "Open"
 msgstr ""
 
-#: whoohub/ui.py:646
+#: whoohub/ui.py:747
 msgid "Open download page"
 msgstr ""
 
-#: whoohub/ui.py:650
+#: whoohub/ui.py:751
 msgid "Install"
 msgstr ""
 
-#: whoohub/ui.py:677
+#: whoohub/ui.py:778
 #, python-brace-format
 msgid "Source: {source}"
 msgstr ""
 
-#: whoohub/ui.py:682
+#: whoohub/ui.py:783
 msgid "Could not find how to start it — look for the app in your menu"
 msgstr ""
 
-#: whoohub/ui.py:695
+#: whoohub/ui.py:796
 #, python-brace-format
 msgid "Version {version}  ·  ♥ {votes}  ·  maintainer: {maintainer}"
 msgstr ""
 
-#: whoohub/ui.py:696
+#: whoohub/ui.py:797
 msgid "none (orphan)"
 msgstr ""
 
-#: whoohub/ui.py:700
+#: whoohub/ui.py:801
 msgid ""
 "AUR packages are built from a script (PKGBUILD) written by the packager, and "
 "it runs on your computer."
 msgstr ""
 
-#: whoohub/ui.py:703
+#: whoohub/ui.py:804
 msgid "Flagged out of date."
 msgstr ""
 
-#: whoohub/ui.py:705
+#: whoohub/ui.py:806
 msgid "The package has no maintainer."
 msgstr ""
 
-#: whoohub/ui.py:727
+#: whoohub/ui.py:828
 msgid "Loading…"
 msgstr ""
 
-#: whoohub/ui.py:733
+#: whoohub/ui.py:834
 #, python-brace-format
 msgid "Could not load it: {error}"
 msgstr ""
 
-#: whoohub/ui.py:745
+#: whoohub/ui.py:846
 #, python-brace-format
 msgid "Installed: {version}"
 msgstr ""
 
-#: whoohub/ui.py:748 whoohub/ui.py:761
+#: whoohub/ui.py:849 whoohub/ui.py:862
 msgid "Build and install"
 msgstr ""
 
-#: whoohub/ui.py:751 whoohub/ui.py:760
+#: whoohub/ui.py:852 whoohub/ui.py:861
 msgid "View PKGBUILD"
 msgstr ""
 
-#: whoohub/ui.py:756
+#: whoohub/ui.py:857
 #, python-brace-format
 msgid "Build {name}?"
 msgstr ""
 
-#: whoohub/ui.py:757
+#: whoohub/ui.py:858
 msgid ""
 "The build script (PKGBUILD) was written by the packager, not by Arch Linux, "
 "and it will run on your computer. If you have not read it yet, do it first."
 msgstr ""
 
-#: whoohub/ui.py:807
+#: whoohub/ui.py:920
 msgid ""
 "One app store for Arch-based systems: repositories, Flathub, AUR and "
 "AppImage."
+msgstr ""
+
+#: whoohub/updates.py:107
+msgid "This release has no package to install — open the release page instead"
+msgstr ""
+
+#: whoohub/updates.py:109
+#, python-brace-format
+msgid "Downloading {file}…"
+msgstr ""
+
+#: whoohub/updates.py:121
+msgid ""
+"The downloaded file is damaged (checksum mismatch) — nothing was installed"
+msgstr ""
+
+#: whoohub/updates.py:122
+msgid "Checksum OK"
+msgstr ""
+
+#: whoohub/updates.py:123
+msgid "pacman could not install the update"
+msgstr ""
+
+#: whoohub/updates.py:125
+#, python-brace-format
+msgid "whoohub {version} installed"
 msgstr ""

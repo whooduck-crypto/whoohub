@@ -32,6 +32,7 @@ choice of where to install it from — and a plain explanation of how the source
 - **AppImage** — the AppImageHub catalog; whoohub downloads the latest stable release from the author's
   GitHub into `~/Applications` and adds a menu entry.
 - **Installed** view with Open and Remove buttons.
+- **Update check** — once a day whoohub asks GitHub for its latest release and offers to update; a package install updates itself (download, checksum check, polkit prompt). Turn it off in the menu.
 - Follows the system light/dark style (libadwaita). English and Russian; more languages welcome.
 
 ## Install
@@ -81,6 +82,8 @@ start e.g. `polkit-gnome`) — it shows the password prompt for repository insta
 Repository and Flathub apps are merged by their AppStream ID; AppImages by name when the match is unique.
 The merged catalog is cached in `~/.cache/whoohub/catalog.sqlite` (SQLite + FTS5) and rebuilt
 automatically when a source catalog changes. whoohub never uses `sudo`.
+
+Network: besides the catalogs and the app files you install, whoohub makes one request a day to the GitHub API for its own latest release (no data about you; off via “Check for updates automatically”).
 
 A word on trust: AUR packages and AppImages come from their packagers and authors, not from Arch Linux
 or Flathub. whoohub says so on every such page and shows the AUR build script before building.

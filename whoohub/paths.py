@@ -7,6 +7,7 @@ _DATA_HOME = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share"))
 
 CACHE = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "whoohub"
 DATA = _DATA_HOME / "whoohub"
+CONFIG = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "whoohub"
 
 DB = CACHE / "catalog.sqlite"          # merged catalog
 FEED = CACHE / "appimage-feed.json"    # AppImageHub catalog
@@ -16,6 +17,7 @@ APPIMAGES = Path.home() / "Applications"            # the .AppImage files themse
 APPIMAGE_REG = DATA / "appimages.json"              # AppImages installed by whoohub
 APPIMAGE_ICONS = DATA / "icons"
 DESKTOP_DIR = _DATA_HOME / "applications"
+SETTINGS = CONFIG / "settings.json"            # update check on/off, last check, skipped version
 
-for d in (CACHE, DATA, IMG, AUR_BUILD, APPIMAGE_ICONS):
+for d in (CACHE, DATA, CONFIG, IMG, AUR_BUILD, APPIMAGE_ICONS):
     d.mkdir(parents=True, exist_ok=True)
