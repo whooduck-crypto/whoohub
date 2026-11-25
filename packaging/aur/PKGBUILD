@@ -12,7 +12,7 @@ optdepends=('flatpak: install apps from Flathub'
             'git: install packages from the AUR'
             'base-devel: build packages from the AUR')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('SKIP')  # set after tagging: updpkgsums
+sha256sums=('6115692103e70e52b478cc5007bcfb430e7682270741ea04d0f3cfcfc580d683')
 
 build() {
     cd "$pkgname-$pkgver"

@@ -1,6 +1,6 @@
 pkgbase = whoohub
 	pkgdesc = One app store for Arch: repositories, Flathub, AUR and AppImage
-	pkgver = 0.1.2
+	pkgver = 0.2.0
 	pkgrel = 1
 	url = https://github.com/whooduck-crypto/whoohub
 	arch = any
@@ -15,7 +15,7 @@ pkgbase = whoohub
 	optdepends = flatpak: install apps from Flathub
 	optdepends = git: install packages from the AUR
 	optdepends = base-devel: build packages from the AUR
-	source = whoohub-0.1.2.tar.gz::https://github.com/whooduck-crypto/whoohub/archive/refs/tags/v0.1.2.tar.gz
-	sha256sums = df8ed395635a7451e39c7970b980c2690eb48e39b38d9370ae1bcc2181ab5695
+	source = whoohub-0.2.0.tar.gz::https://github.com/whooduck-crypto/whoohub/archive/refs/tags/v0.2.0.tar.gz
+	sha256sums = 6115692103e70e52b478cc5007bcfb430e7682270741ea04d0f3cfcfc580d683
 
 pkgname = whoohub
