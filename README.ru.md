@@ -40,7 +40,7 @@ AUR и AppImage, которые скачивают вручную. whoohub ищ�
 ### Готовый пакет (рекомендуется)
 
 ```sh
-sudo pacman -U https://github.com/whooduck-crypto/whoohub/releases/download/v0.1.0/whoohub-0.1.0-1-any.pkg.tar.zst
+sudo pacman -U https://github.com/whooduck-crypto/whoohub/releases/download/v0.1.1/whoohub-0.1.1-1-any.pkg.tar.zst
 ```
 
 Зависимости pacman поставит сам. Новые версии — на странице

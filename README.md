@@ -40,7 +40,7 @@ choice of where to install it from — and a plain explanation of how the source
 ### Ready-made package (recommended)
 
 ```sh
-sudo pacman -U https://github.com/whooduck-crypto/whoohub/releases/download/v0.1.0/whoohub-0.1.0-1-any.pkg.tar.zst
+sudo pacman -U https://github.com/whooduck-crypto/whoohub/releases/download/v0.1.1/whoohub-0.1.1-1-any.pkg.tar.zst
 ```
 
 pacman pulls in the dependencies itself. Newer versions are on the

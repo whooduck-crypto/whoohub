@@ -6,7 +6,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: whoohub 0.1.0\n"
+"Project-Id-Version: whoohub 0.1.1\n"
 "Report-Msgid-Bugs-To: https://github.com/whooduck-crypto/whoohub/issues\n"
 "POT-Creation-Date: 2026-11-25 23:47+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"

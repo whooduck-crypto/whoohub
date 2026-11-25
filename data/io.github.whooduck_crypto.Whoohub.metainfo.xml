@@ -44,6 +44,11 @@
     <binary>whoohub</binary>
   </provides>
   <releases>
+    <release version="0.1.1" date="2026-11-25">
+      <description>
+        <p>Fixes oversized app tiles outside Featured and adds a check for new versions.</p>
+      </description>
+    </release>
     <release version="0.1.0" date="2026-11-25">
       <description>
         <p>First release.</p>
